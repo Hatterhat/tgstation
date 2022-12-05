@@ -375,6 +375,37 @@
 	owner.underlays -= marked_underlay //if this is being called, we should have an owner at this point.
 	..()
 
+/datum/status_effect/katana_mark
+	id = "katana_mark"
+	duration = 10 SECONDS // work fast or lose your cool marks
+	status_type = STATUS_EFFECT_MULTIPLE
+	alert_type = null
+	var/obj/item/kinetic_katana/linked_katana
+	var/mutable_appearance/marked_underlay
+	var/is_backstab = 0
+
+/datum/status_effect/katana_mark/on_creation(mob/living/new_owner, obj/item/kinetic_katana/katana_synced, backstab)
+	. = ..()
+	if(.)
+		linked_katana = katana_synced
+		is_backstab = backstab
+
+/datum/status_effect/katana_mark/on_apply()
+	if(owner.mob_size >= MOB_SIZE_LARGE)
+		marked_underlay = mutable_appearance('icons/effects/effects.dmi', "shield2")
+		marked_underlay.pixel_x = -owner.pixel_x
+		marked_underlay.pixel_y = -owner.pixel_y
+		owner.underlays += marked_underlay
+		return TRUE
+	return FALSE
+
+/datum/status_effect/katana_mark/Destroy()
+	linked_katana = null
+	if(owner)
+		owner.underlays -= marked_underlay
+	QDEL_NULL(marked_underlay)
+	return ..()
+
 /datum/status_effect/stacking/saw_bleed
 	id = "saw_bleed"
 	tick_interval = 6

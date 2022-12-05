@@ -63,6 +63,25 @@
 	return .
 
 /**
+ * Removes one specific instance of a given status effect from this mob
+ *
+ * removed_effect - TYPEPATH of a status effect to remove.
+ * Additional status effect arguments can be passed - these are passed into before_remove.
+ *
+ * Returns TRUE if at least one was removed.
+ */
+/mob/living/proc/remove_specific_status_effect(datum/status_effect/removed_effect, ...)
+	var/list/arguments = args.Copy(2)
+
+	. = FALSE
+	for(var/datum/status_effect/existing_effect as anything in status_effects)
+		if(existing_effect.id == initial(removed_effect.id) && existing_effect.before_remove(arguments))
+			qdel(existing_effect)
+			. = TRUE
+
+	return .
+
+/**
  * Checks if this mob has a status effect that shares the passed effect's ID
  *
  * checked_effect - TYPEPATH of a status effect to check for. Checks for its ID, not it's typepath
