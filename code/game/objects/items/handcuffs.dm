@@ -403,10 +403,12 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
-	///If true, the trap is "open" and can trigger.
+	/// If true, the trap is "open" and can trigger.
 	var/armed = FALSE
-	///How much damage the trap deals when triggered.
+	/// How much damage the trap deals when triggered.
 	var/trap_damage = 20
+	/// What kind of damage the trap does when triggered.
+	var/trap_damage_type = BRUTE
 
 /obj/item/restraints/legcuffs/beartrap/prearmed
 	armed = TRUE
@@ -432,21 +434,28 @@
 	. = ..()
 	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
-	armed = !armed
-	update_appearance()
-	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+	toggle_trap(user)
 
 /**
- * Closes a bear trap
- *
+ * Toggles a bear trap.
+ */
+/obj/item/restraints/legcuffs/beartrap/proc/toggle_trap(mob/user)
+	armed = !armed
+	update_appearance()
+	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]."))
+
+/**
  * Closes a bear trap.
- * Arguments:
  */
 /obj/item/restraints/legcuffs/beartrap/proc/close_trap()
 	armed = FALSE
 	update_appearance()
 	playsound(src, 'sound/effects/snap.ogg', 50, TRUE)
 
+
+/**
+ * Called when a beartrap is stepped on.
+ */
 /obj/item/restraints/legcuffs/beartrap/proc/trap_stepped_on(datum/source, atom/movable/entering, ...)
 	SIGNAL_HANDLER
 
@@ -493,7 +502,7 @@
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone)
+	victim.apply_damage(trap_damage, trap_damage_type, def_zone)
 
 /**
  * # Energy snare
@@ -533,6 +542,69 @@
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
 	breakouttime = 2 SECONDS // Cyborgs shouldn't have a strong restraint
 	slowdown = 3
+
+/obj/item/restraints/legcuffs/beartrap/mine
+	name = "bounder energy snare"
+	desc = "A trap used to catch highly-mobile bears and other creatures... by throwing itself when it senses movement. \
+	Probably a little too sensitive, really, but there have to be points for trying."
+	//todo icon_state = "todo"
+	breakouttime = 10 SECONDS
+	trap_damage = 30
+	trap_damage_type = STAMINA
+	/// Is the monitoring field active?
+	var/field_ready = FALSE
+	/// Range of the monitoring field.
+	var/field_range = 2
+	/// Timer for arming the field.
+	var/field_arming_timer
+	var/datum/proximity_monitor/advanced/field
+
+/obj/item/restraints/legcuffs/beartrap/mine/Initialize(mapload)
+	. = ..()
+	field = new(src, 0)
+
+/obj/item/restraints/legcuffs/beartrap/mine/toggle_trap(mob/user)
+	. = ..()
+	if(armed)
+		// trap toggled ON. let's get this money
+		field_arming_timer = addtimer(CALLBACK(src, PROC_REF(arm_field)), 3 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
+	else
+		// trap toggled OFF. no arming today!
+		deltimer(field_arming_timer)
+		field_ready = FALSE
+		field.set_range(0)
+
+/// Arms the monitoring field for the bounder snare, setting it up to throw itself at people.
+/obj/item/restraints/legcuffs/beartrap/mine/proc/set_field(var/toggle)
+	field_ready = toggle
+	field.set_range(toggle ? field_range : 0)
+
+/obj/item/restraints/legcuffs/beartrap/mine/HasProximity(atom/movable/proximity_check_mob)
+	if(!field_ready)
+		return
+
+	if(iscarbon(proximity_check_mob))
+		var/mob/living/carbon/proximity_carbon = proximity_check_mob
+		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && field_ready)
+			launch_towards(proximity_carbon)
+
+	launch_towards(proximity_check_mob) // not strictly a mob. however we throw at anything regardless
+
+/obj/item/restraints/legcuffs/beartrap/mine/proc/launch_towards(atom/movable/target)
+	visible_message(span_warning("[src] throws itself at [target]!"))
+	playsound(src, 'sound/effects/stealthoff.ogg', 50, TRUE, TRUE)
+	throw_at(target, 5, 3)
+
+/obj/item/restraints/legcuffs/beartrap/mine/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
+		return	//abort
+	// otherwise attempt to legcuff
+	spring_trap(hit_atom, TRUE, TRUE)
+
+/obj/item/restraints/legcuffs/beartrap/mine/close_trap()
+	. = ..()
+	field.set_range(0)
+	field_ready = FALSE
 
 /obj/item/restraints/legcuffs/bola
 	name = "bola"
