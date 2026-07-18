@@ -159,10 +159,10 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	name = "\improper Sakhno M2442 Army"
-	desc = "A modification of the venerable Sakhno Precision Rifle, with \"Sakhno M2442 Army\" stamped into the side. \
-		It is unknown what army this pattern of rifle was made for, or if it was ever even used by an army of any sort. \
-		The previous owner did not treat it well. For some reason, there's moisture all through the internals."
-	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\", with \"Sakhno M2442 Army\" is stamped into the side. \
+	desc = "A bolt-action rifle with \"Sakhno M2442 Army\" stamped into the side. \
+		It's unknown what army this rifle was made for, or if it was ever used by one, but it's obvious the previous owner did not treat it well. \
+		For some reason, there's moisture all through the internals."
+	sawn_desc = "A sawn-off bolt-action rifle, popularly known as an \"Obrez\", with \"Sakhno M2442 Army\" stamped into the side. \
 		There's probably a reason it wasn't manufactured this short to begin with. \
 		Cutting the weapon down has not helped with the moisture problem."
 	icon_state = "sakhno_tactifucked"
