@@ -77,7 +77,6 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn more about [src]."), \
 		lore = "The Sakhno Precision Rifle's origins are closely tied to the Sakhno Concern, one of the Third Soviet Union's \
 			state-ran weapons manufacturing concerns before the Union's collapse in the February Revolution, and subsequently \
 			one of the Spinward Stellar Coalition's favored industrial concerns.<br>\
@@ -145,7 +144,6 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/harpoon/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn more about [src]."), \
 		lore = "Breech-loaded spearguns aren't a common sight around Nanotrasen stations, because \
 			everything you could reasonably need a speargun for, like carp hunting, is better served \
 			by more available options, such as laser guns or toolboxes.<br>\
@@ -156,7 +154,7 @@
 			Or, equally as likely, some other cell of the Syndicate pilfered it to paint the Consortium as \
 			responsible for whatever attack could be committed with a speargun.<br>\
 			<br>\
-			Either way, having a ballistic harpoon stuck in a limb is widely regarded as being an experience which \"sucks\"." \
+			Either way, having a ballistic harpoon stuck in a limb is widely regarded as being a drag." \
 	)
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
@@ -222,7 +220,6 @@
 
 /obj/item/gun/ballistic/rifle/boltaction/donkrifle/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn more about [src]."), \
 		lore = "Donk Co.'s Jezail line of bolt-action sporting rifles is, admittedly, a strange, almost archaic design, \
 			coming from an even stranger place, as most people would not expect a logistics and food processing company to \
 			create, market, and distribute bolt-action rifles.<br>\
@@ -369,14 +366,14 @@
 	AddElement(/datum/element/examine_lore, \
 		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to recall a tale about [src]."), \
 		lore = "<b>You were told this story, in hushed tones, from a wizened man in a grey jumpsuit...</b><br><br>\
-		It is said that the first slaying committed on a Nanotrasen space station was by an assistant.<br><br>\
-		That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.<br><br>\
-		They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists.<br><br>\
-		Eyes, sharp and waiting. Hunters in the dark.<br><br>\
-		Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.<br><br>\
-		This weapon is one such tool. And it is a grim one indeed - wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.<br>\
-		<br>\
-		It is a symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent." \
+			It is said that the first slaying committed on a Nanotrasen space station was by an assistant.<br><br>\
+			That this act, done by toolbox, maybe spear, was what consigned their kind to a life of destitution, rejection and violence.<br><br>\
+			They carry the weight of this act visibly; the grey jumpsuit. Breathing deeply filtered air. And with bloodsoaked yellow hands clenched into fists.<br><br>\
+			Eyes, sharp and waiting. Hunters in the dark.<br><br>\
+			Eventually, these killing spirits sought to stake a claim on the metal tombs they were trapped within. Rejecting their status. Determined to be something more.<br><br>\
+			This weapon is one such tool. And it is a grim one indeed - wrought from scrap, pulled from the station's walls and floors and the very nails holding it together.<br>\
+			<br>\
+			It is a symbol that the true masters of this place are not those who merely inhabit it, but the one willing to twist it towards a killing intent." \
 	)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/add_bayonet_point()
@@ -522,7 +519,6 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn more about [src]."), \
 		lore = "Modern arms and armor technology has come a long way since man's first strides into space, \
 			from high-throughput directed energy weaponry to advanced energy shielding and everything in between. \
 			Such advancements in technology, then, should have put the role of the anti-materiel rifle to rest, \
@@ -574,7 +570,6 @@
 
 /obj/item/gun/ballistic/rifle/sks/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn more about [src]."), \
 		lore = "The Sakhno Concern's modernized reproductions of the SKS were commissioned by the \
 			leadership of the Third Soviet Union to celebrate their establishment in the Spinward Sector.<br>\
 			<br>\
